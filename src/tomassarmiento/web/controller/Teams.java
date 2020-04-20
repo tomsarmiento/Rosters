@@ -53,7 +53,6 @@ public class Teams extends HttpServlet {
 			//Almaceno la ID en la session para saber que team está siendo consultado
 			int teamId = Integer.parseInt(request.getParameter("id"));
 			session.setAttribute("id",teamId);                  
-			System.out.println("id parameter no es null :"+session.getAttribute("id"));
 			
 			if(Roster.getRoster().get(teamId)==null) {
 				//Creo el arraylist de los players de inmediato para evitar problemas al desplegar los nombres de los players
@@ -62,13 +61,11 @@ public class Teams extends HttpServlet {
 				//agrego el arraylist al hashmap con su respectivo id como key
 				Roster.setRoster(teamId, players);
 				//añado el arraylist con los players en session attribute "players"
-				session.setAttribute("players", Roster.getRoster().get(teamId));
-				System.out.println("Teamid attribute es null");		
+				session.setAttribute("players", Roster.getRoster().get(teamId));	
 			}
 			else {
 				// establezco el arraylist de los jugadores de este team con id=teamId en el atributo "players" de sesión
 				session.setAttribute("players", Roster.getRoster().get(teamId));		
-				System.out.println("Teamid attribute no es null");
 			}
 		}
 		
@@ -90,9 +87,6 @@ public class Teams extends HttpServlet {
 		if(request.getParameter("name")==null) { // Viene de index
 			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/NewTeam.jsp"); 
 		    view.forward(request, response);
-
-			System.out.println("name parameter es null");
-
 		}
 		else{ // Viene de NewTeam
 			Team team = new Team(request.getParameter("name"));
@@ -102,23 +96,17 @@ public class Teams extends HttpServlet {
 			newNames.add(team.getName());
 			session.setAttribute("names", newNames);
 			
-			//Para llevar una cuenta total de los teams creados
-			int totalTeams = Team.getTotalTeams(); //* cambié team por Team pues el método ahora es static
-			session.setAttribute("totalTeams", totalTeams);
-			
 			//Para mostrar la cantidad de jugadores de cada equipo
 			ArrayList<Integer> playersAmount = Roster.getPlayersAmount();
 			session.setAttribute("playersAmount", playersAmount);
 			
 			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 			view.forward(request, response);
-			System.out.println("name parameter no es null");
 		}
 		if(session.getAttribute("names")==null) {
 			//ArrayList para los nombres de cada team
 			ArrayList<String> names = new ArrayList<String>();
 			session.setAttribute("names", names);
-			System.out.println("names attribute es null");
 		}
 	}
 

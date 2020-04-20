@@ -76,18 +76,13 @@ public class Players extends HttpServlet {
 			Roster.setRoster(teamId, players);
 			//session.setAttribute("hashmapPlayers", Roster.getRoster());
 			session.setAttribute("players", Roster.getRoster().get(teamId));
-			System.out.println("Teamid attribute es null");
-			
 		}
 		else {
 			// guardar todo en Roster
 			ArrayList<Player> newPlayers = (Roster.getRoster()).get(teamId);
 			newPlayers.add(player);
-			//? es legal simplemente hacer put en un hashmap para reemplazar el value de una key?
 			Roster.setRoster(teamId, newPlayers);
 			session.setAttribute("players", Roster.getRoster().get(teamId));
-			
-			System.out.println("Teamid attribute no es null");
 		}
 		
 		response.sendRedirect("Teams?id="+teamId+"");
