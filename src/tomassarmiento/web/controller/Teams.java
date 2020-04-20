@@ -36,8 +36,19 @@ public class Teams extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// Viene de index a ver los detalles de algún team en particular
-		HttpSession session = request.getSession();
+	HttpSession session = request.getSession();
+	if(request.getParameter("toDeleteId")!=null) {//Viene de index a borrar un equipo
+		int toDeleteId = Integer.parseInt(request.getParameter("toDeleteId"));
+		Roster.deleteTeam(toDeleteId);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<String> newNames = (ArrayList<String>) session.getAttribute("names");
+		newNames.remove(toDeleteId);
+		session.setAttribute("names", newNames);
+		
+		response.sendRedirect("Home");
+	}
+	else {// Viene de index a ver los detalles de algún team en particular
 		if(request.getParameter("id")!=null) {
 			//Almaceno la ID en la session para saber que team está siendo consultado
 			int teamId = Integer.parseInt(request.getParameter("id"));
@@ -52,21 +63,19 @@ public class Teams extends HttpServlet {
 				Roster.setRoster(teamId, players);
 				//añado el arraylist con los players en session attribute "players"
 				session.setAttribute("players", Roster.getRoster().get(teamId));
-				System.out.println("Teamid attribute es null");
-						
+				System.out.println("Teamid attribute es null");		
 			}
 			else {
 				// establezco el arraylist de los jugadores de este team con id=teamId en el atributo "players" de sesión
-				session.setAttribute("players", Roster.getRoster().get(teamId));
-						
+				session.setAttribute("players", Roster.getRoster().get(teamId));		
 				System.out.println("Teamid attribute no es null");
-	
 			}
 		}
 		
 		// Redirecciona para ver los detalles del team 
 		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/TeamInfo.jsp");
 		view.forward(request, response);
+		}
 	}
 
 	/**

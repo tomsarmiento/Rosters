@@ -35,10 +35,14 @@
 							output+= "<td>"+names[(i)]+"</td>"
 							output+= "<td>"+players[i]+"</td>"
 							output+= "<td><a href='Teams?id="+(i)+"'>Details</a></td>"
+							output+= "<td><a onclick='deleteTeam("+i+")' class='toDelete' href='Teams?toDeleteId="+(i)+"'>Delete</a></td>"
 							output+= "</tr>"
 							$('.tabla1').append(output);
 						}
 				}
+				//function deleteTeam(teamId){
+						
+				//}
  			});
 		</script>
 	</head>

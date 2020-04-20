@@ -34,4 +34,15 @@ public class Roster {
 		}
 		return playersAmount;
 	}
+	
+	//Método que eliminar un equipo del HashMap
+	public static void deleteTeam(int teamId) {
+		roster.remove(teamId);
+		for(int i=0; i<Team.getTotalTeams(); i++) {
+			if(roster.get(teamId+(i+1))!=null){
+				roster.put(teamId+i, roster.get(teamId+(i+1)));
+				roster.remove(teamId+(i+1));
+			}
+		}
+	}
 }
