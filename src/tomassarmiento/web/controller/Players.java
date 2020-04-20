@@ -34,9 +34,25 @@ public class Players extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//Viene de teamInfo a crear un nuevo jugador
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/NewPlayer.jsp");
-		view.forward(request, response);
+		if(request.getParameter("playerId")!=null) { 
+			//Viene de teaminfo a borrar un jugador
+			HttpSession session = request.getSession();
+			int playerId = Integer.parseInt(request.getParameter("playerId"));
+			int teamId = (Integer) session.getAttribute("id");
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<Player> playersErase = (ArrayList<Player>) session.getAttribute("players");
+			playersErase.remove(playerId);
+			Roster.setRoster(teamId, playersErase);
+			session.setAttribute("players", playersErase);
+			response.sendRedirect("Teams?id="+teamId+"");
+		}
+		else {
+			//Viene de teamInfo a crear un nuevo jugador
+			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/NewPlayer.jsp");
+			view.forward(request, response);
+		}
+	
 	}
 
 	/**

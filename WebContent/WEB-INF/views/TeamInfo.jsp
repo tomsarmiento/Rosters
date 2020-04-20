@@ -20,6 +20,19 @@
 				</c:forEach>				//*Tenía id+1, pero ya que borré el primer elemento default que habia puesto en el array name, lo cambié
 				$('.headerTeamName').append(names[id])
 				$('.newPlayer').attr("href","Players?id="+id+"")
+				
+				//Para desplegar los jugadores en la tabla
+				var i = 0;
+				<c:forEach var="player" items="${players}">	
+					output = "<tr>"
+		   			output += "<td><c:out value="${player.name}"></c:out></td>"
+		   			output += "<td><c:out value="${player.getLastName()}"></c:out></td>"
+		   			output += "<td>"+<c:out value="${player.age}"></c:out>+"</td>"
+		   			output += "<td><a href='Players?playerId="+i+"'>Eliminar</a></td>"
+		   			output += "</tr>"
+			   		i++
+			   		$('.tabla1').append(output);
+				</c:forEach>
  			});
 		</script>
 	</head>
@@ -34,14 +47,7 @@
 				<th scope="col">Actions</th>
 			</tr>
 			<!--  En el segundo team se muestran los players del primero porque el attributo players permanece desde el anterior--> 
-			<c:forEach var="player" items="${players}">	
-					<tr>
-			   		<td><c:out value="${player.name}"></c:out></td>
-			   		<td><c:out value="${player.getLastName()}"></c:out></td>
-			   		<td><c:out value="${player.age}"></c:out></td>
-			   		<td><a href="Players">Eliminar</a></td>
-			   		</tr>
-				</c:forEach>
+
 		</table>
 		<a href="Home">Go back to Teams</a>
 	</body>

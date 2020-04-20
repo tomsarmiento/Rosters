@@ -41,7 +41,7 @@ public class Teams extends HttpServlet {
 		if(request.getParameter("id")!=null) {
 			//Almaceno la ID en la session para saber que team está siendo consultado
 			int teamId = Integer.parseInt(request.getParameter("id"));
-			session.setAttribute("id",teamId);                  //*cambié request.getParameter por session.getAttribute
+			session.setAttribute("id",teamId);                  
 			System.out.println("id parameter no es null :"+session.getAttribute("id"));
 			
 			if(Roster.getRoster().get(teamId)==null) {
@@ -87,9 +87,6 @@ public class Teams extends HttpServlet {
 		}
 		else{ // Viene de NewTeam
 			Team team = new Team(request.getParameter("name"));
-			session.setAttribute("team", team);
-
-			
 			//Se van agregando los nombres de cada team a medida que se van creando
 			//Este ArrayList es especificamente para mostrar el nombre de cada team en los JSP
 			ArrayList<String> newNames = (ArrayList<String>) session.getAttribute("names");
