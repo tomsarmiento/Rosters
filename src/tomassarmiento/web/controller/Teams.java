@@ -94,8 +94,12 @@ public class Teams extends HttpServlet {
 			session.setAttribute("names", newNames);
 			
 			//Para llevar una cuenta total de los teams creados
-			int totalTeams = team.getTotalTeams();
+			int totalTeams = Team.getTotalTeams(); //* cambié team por Team pues el método ahora es static
 			session.setAttribute("totalTeams", totalTeams);
+			
+			//Para mostrar la cantidad de jugadores de cada equipo
+			ArrayList<Integer> playersAmount = Roster.getPlayersAmount();
+			session.setAttribute("playersAmount", playersAmount);
 			
 			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 			view.forward(request, response);

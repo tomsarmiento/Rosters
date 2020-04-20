@@ -21,11 +21,19 @@
 					</c:forEach>
 					console.log(num)
 					
+					//array con la cantidad de jugadores de cada team
+					var players = []
+					var num1 = 0;
+					<c:forEach var="amount" items="${playersAmount}">
+			   			players[num1]= "${amount}"
+				   		num1++
+					</c:forEach>
+					
 					// Loopea para generar la info de cada team
 					for( i=0; i < (num); i++){
 							output= "<tr>"
 							output+= "<td>"+names[(i)]+"</td>"
-							output+= "<td></td>"
+							output+= "<td>"+players[i]+"</td>"
 							output+= "<td><a href='Teams?id="+(i)+"'>Details</a></td>"
 							output+= "</tr>"
 							$('.tabla1').append(output);

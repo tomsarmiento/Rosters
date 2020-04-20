@@ -13,7 +13,7 @@ public class Team {
 	}
 	
 	//getters and setters
-	public int getTotalTeams() {
+	public static int getTotalTeams() {
 		return totalTeams;
 	}
 	public String getName() {
